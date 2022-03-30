@@ -1,7 +1,13 @@
-const express = require('express');
-const { getgid } = require('process');
+const express = require("express");
 const router = express.Router();
-const { getGoals, setGoals, updateGoals, deleteGoals } = require('../controllers/goalController');
+const {
+  getGoals,
+  setGoals,
+  updateGoals,
+  deleteGoals,
+} = require("../controllers/goalController");
+const { protect } = require("../middleware/authMiddleware");
+
 
 // router.get('/', getGoals);
 
@@ -12,7 +18,7 @@ const { getGoals, setGoals, updateGoals, deleteGoals } = require('../controllers
 // router.delete('/:id', deleteGoals);
 
 // new way
-router.route('/').get(getGoals).post(setGoals);
-router.route('/:id').delete(deleteGoals).put(updateGoals);
+router.route("/").get(protect, getGoals).post(protect, setGoals);
+router.route("/:id").delete(protect, deleteGoals).put(protect, updateGoals);
 
 module.exports = router;
